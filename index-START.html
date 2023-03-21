@@ -1,67 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Drum Kit</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Drum Kit</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <div class="keys">
+      <div data-key="65" class="key">
+        <!--every key on keyboard, has associated 'key-code'-->
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="83" class="key">
+        <!--data-attribute is an arbitrary attribute. used here to attach to associated audio in code below-->
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </div>
+      <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </div>
+      <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </div>
+    </div>
 
+    <audio data-key="65" src="sounds/clap.wav"></audio>
+    <!--clap sound is assoicated to "A"(data-key='65')-->
+    <audio data-key="83" src="sounds/hihat.wav"></audio>
+    <audio data-key="68" src="sounds/kick.wav"></audio>
+    <audio data-key="70" src="sounds/openhat.wav"></audio>
+    <audio data-key="71" src="sounds/boom.wav"></audio>
+    <audio data-key="72" src="sounds/ride.wav"></audio>
+    <audio data-key="74" src="sounds/snare.wav"></audio>
+    <audio data-key="75" src="sounds/tom.wav"></audio>
+    <audio data-key="76" src="sounds/tink.wav"></audio>
 
-  <div class="keys">
-    <div data-key="65" class="key">
-      <kbd>A</kbd>
-      <span class="sound">clap</span>
-    </div>
-    <div data-key="83" class="key">
-      <kbd>S</kbd>
-      <span class="sound">hihat</span>
-    </div>
-    <div data-key="68" class="key">
-      <kbd>D</kbd>
-      <span class="sound">kick</span>
-    </div>
-    <div data-key="70" class="key">
-      <kbd>F</kbd>
-      <span class="sound">openhat</span>
-    </div>
-    <div data-key="71" class="key">
-      <kbd>G</kbd>
-      <span class="sound">boom</span>
-    </div>
-    <div data-key="72" class="key">
-      <kbd>H</kbd>
-      <span class="sound">ride</span>
-    </div>
-    <div data-key="74" class="key">
-      <kbd>J</kbd>
-      <span class="sound">snare</span>
-    </div>
-    <div data-key="75" class="key">
-      <kbd>K</kbd>
-      <span class="sound">tom</span>
-    </div>
-    <div data-key="76" class="key">
-      <kbd>L</kbd>
-      <span class="sound">tink</span>
-    </div>
-  </div>
+    <script>
+     //start code here:
+     
+     //window.addEventListener('keydown', playSound)  //listen for 'keydown'event in the window. will run function upon event
+      //move to bottom
 
-  <audio data-key="65" src="sounds/clap.wav"></audio>
-  <audio data-key="83" src="sounds/hihat.wav"></audio>
-  <audio data-key="68" src="sounds/kick.wav"></audio>
-  <audio data-key="70" src="sounds/openhat.wav"></audio>
-  <audio data-key="71" src="sounds/boom.wav"></audio>
-  <audio data-key="72" src="sounds/ride.wav"></audio>
-  <audio data-key="74" src="sounds/snare.wav"></audio>
-  <audio data-key="75" src="sounds/tom.wav"></audio>
-  <audio data-key="76" src="sounds/tink.wav"></audio>
+      function playSound(e) {
+        var audio = document.querySelector(`audio[data-key='${e.keyCode}']`); //tie 'audio' variable to audio element with an attribute selector of "data-key='e.keyCode'"
+        //console.log(audio); //when a 'keydown'event happens, logs the audio tag with associated attribute selector:[data-key='select-keyCodes']. IF there are no auidio[keyCode] listed will log null as we don't have anything set for it
+        var key = document.querySelector(`.key[data-key='${e.keyCode}']`); //select class.key with associated attribute selector:[data-key='select-keyCodes']
+        if (!audio) return; //if NO audio, stops function from running
+        audio.currentTime = 0; //rewind to start of audio (eg, w/o, F:openhat audio file was a few seconds long, want it to restart/play again when we press it)
+        audio.play(); //method. starts playing the current audio or video (audio/video.play())
+        //console.log(key); //check when keydown appropriate keys, will become selected (and logged). WANT TO: add the .playing CSS styling
+        //key.setAttribute('class', 'playing'); //setAttribute will REPLACE the class='sound' already there. not what we want .: use .classList.add() instead
+        key.classList.add("playing"); //currently, the class stays on. want it to come off after it is pressed
+        //console.log(key);
+      }
 
-<script>
+      var keys = document.querySelectorAll(".key"); //selects all with class='key'. gives us an array of every element matched
+      //keys.addEventListener('transitionend');  canNOT be used on array, cannot listen on all of them, must loop thru each individaully and attach an event listenr to them
 
-</script>
+      function removeTransition(e) {
+        //console.log(e); //to see what we're working with. rn it shows ALL of the different transitioned. want to just do when one thing is over.
+        if (e.propertyName !== "transform") return; //skip if it is not a transform
+        //console.log(e.propertyName);  //logs the word 'transform' as thats the property we are ending
+        this.classList.remove("playing"); //this refers to the thing that got called against it. addEventListener got called against the selected key
+      }
 
+      keys.forEach((key) =>
+        key.addEventListener("transitionend", removeTransition)
+      ); //=> ARROW FUNCTION.  need to make the function before we can use it^make above
+      //breakdown: for each key, add an eventListener so that when transitionEnds, we use a function to remove the transition .playing
 
-</body>
+      window.addEventListener("keydown", playSound); //listen for 'keydown'event in the window. will run function upon event
+   
+   
+   </script>
+  </body>
 </html>
