@@ -8,8 +8,6 @@ when you hit the coresponding key on keyboard, will do 2 things:
 2. will do short animation (button grows, apply boarder and background)
 
 
-<kbd></kbd> - HTML tag keyboard input element
-
 when pressed key, 
 adds class".playing" to element, which will link to CSS
 
@@ -21,15 +19,22 @@ adds class".playing" to element, which will link to CSS
 
 New things: 
 
+<kbd></kbd> - HTML tag keyboard input element
 
-play() - method allowing to play audio/videos
+
+.play() - method allowing to play audio/videos
 stynax: audio/video.play() 
 
 
-transition-end Event. 'i transitioned from one point to another. when done, do something else' 
-eg:  from border:4px solid black;  to->  border-color:yellow
+.addEventListener('transitionend', ___ )  - method to initiate a  transition-end Event. 'i transitioned from one point to another. when done, do something else'.  Eg:  from border:4px solid black; -to->  border-color:yellow
+syntax: eventTarget.AddEventListener('eventType', function) 
 
-forEach
+
+.forEach()  -Array method, calls a function FOR EACH element in an array
+syntax: arrayTarget.forEach(myFunction)
+
+.classList.add/remove/toggle('')  -  method to add/remove a class to the selectedElement
+
 
 => ARROW FUNCTION 
 

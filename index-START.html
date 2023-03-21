@@ -88,9 +88,8 @@
         this.classList.remove("playing"); //this refers to the thing that got called against it. addEventListener got called against the selected key
       }
 
-      keys.forEach((key) =>
-        key.addEventListener("transitionend", removeTransition)
-      ); //=> ARROW FUNCTION.  need to make the function before we can use it^make above
+      keys.forEach(key => key.addEventListener("transitionend", removeTransition));
+      //=> ARROW FUNCTION.  need to make the function before we can use it^make above
       //breakdown: for each key, add an eventListener so that when transitionEnds, we use a function to remove the transition .playing
 
       window.addEventListener("keydown", playSound); //listen for 'keydown'event in the window. will run function upon event
